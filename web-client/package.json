@@ -1,19 +1,24 @@
 {
-  "name": "nuxt-app",
+  "name": "web",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "nuxt",
     "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "@types/node": "^18",
-    "nuxt": "^3.6.2"
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
   "dependencies": {
-    "vuetify": "^3.3.7"
+    "@nuxtjs/axios": "^5.3.6",
+    "core-js": "^3.25.3",
+    "nuxt": "^2.15.8",
+    "vue": "^2.7.10",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10",
+    "vuetify": "^2.6.10"
+  },
+  "devDependencies": {
+    "@nuxt/types": "~2.17.0",
+    "@nuxtjs/vuetify": "^1.12.3"
   }
 }
