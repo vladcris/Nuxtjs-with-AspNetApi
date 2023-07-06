@@ -7,7 +7,13 @@ jobs:
     
     runs-on: ubuntu-latest # virtual machine create on the servers
     steps:
+        #This is an action that checks out your repository onto the runner, allowing you to run scripts or other actions against your code (such as build and test tools). 
+        #You should use the checkout action any time your workflow will run against the repository's code
+      - name: Pull code to virtual machine
+        uses: actions/checkout@v3
+        
       - name: Print Current Directory
         run: pwd
+        
       - name: List files in directory
         run: ls
