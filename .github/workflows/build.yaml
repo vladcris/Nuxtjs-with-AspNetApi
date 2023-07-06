@@ -1,0 +1,13 @@
+﻿name: CI Workflow
+
+on: push # when we push changes to the remote branch
+
+jobs:
+  check-bats-version:
+    
+    runs-on: ubuntu-latest # virtual machine create on the servers
+    steps:
+      - name: Print Current Directory
+        run: pwd
+      - name: List files in directory
+        run: ls
