@@ -16,12 +16,14 @@ builder.Services.AddCors(opt => opt.AddPolicy(allCors, policy => {
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()) 
 {
     app.UseDeveloperExceptionPage();
 }
 
 app.UseCors(allCors);
+
+app.UseStaticFiles();
 
 app.MapControllers();
 
