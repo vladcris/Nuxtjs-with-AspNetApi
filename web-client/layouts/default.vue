@@ -1,14 +1,19 @@
 <template>
   <v-app dark>
+
+    <v-app-bar app dense>
+      <v-toolbar-title>Tricking Library</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <video-upload/>
+    </v-app-bar>
+
     <v-main>
-      <v-container>
         <Nuxt />
-      </v-container>
     </v-main>
+
   </v-app>
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>

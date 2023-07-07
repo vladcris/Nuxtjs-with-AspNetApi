@@ -42,6 +42,7 @@ export default {
   ],
   axios: {
     // proxy: true
+    baseURL: 'http://localhost:5007'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
