@@ -1,15 +1,11 @@
 <template>
     <div>
+
       <div v-if="tricks">
         <div v-for="t in tricks">
-          {{t.name}}
-          <div>
-            <video width="500" controls :src="`http://localhost:5007/api/videos/${t.video}`" ></video>
-          </div>
+          <v-btn :to="`/tricks/${t.id}`">{{t.name}}</v-btn>
         </div>
       </div>
-
-
 
    </div>
 </template>
@@ -18,6 +14,11 @@
 import {mapState} from 'vuex';
 
 export default {
-  computed: mapState('tricks', ['tricks']),
+  computed: {
+    ...mapState('tricks', ['tricks']),
+  },
+  async fetch(){
+    await this.$store.dispatch("tricks/fetchTricks", null, {root: true});
+  }
 }
 </script>

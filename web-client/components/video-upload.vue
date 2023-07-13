@@ -12,21 +12,27 @@
               Select Type
             </v-stepper-step>
 
-            <v-divider></v-divider>
+            <v-divider v-if="type === uploadType.TRICK"></v-divider>
 
-            <v-stepper-step :complete="step > 2" step="2">
-              Upload
-            </v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step :complete="step > 3" step="3">
+            <v-stepper-step v-if="type === uploadType.TRICK" :complete="step > 2" step="2">
               Trick Information
             </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4">
+            <v-stepper-step :complete="step > 3" step="3">
+              Upload
+            </v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step :complete="step > 4" step="4">
+              Submission Information
+            </v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step step="5">
               Review
             </v-stepper-step>
           </v-stepper-header>
@@ -42,20 +48,27 @@
 
             <v-stepper-content step="2">
               <div>
-                <v-file-input accept="video/*" @change="handleFile" ></v-file-input>
+                <v-text-field label="Trick Name" v-model="trickName"></v-text-field>
+                <v-btn @click="incStep">Save Trick</v-btn>
               </div>
             </v-stepper-content>
 
             <v-stepper-content step="3">
               <div>
-                <v-text-field label="Tricking Name" v-model="trickName"></v-text-field>
-                <v-btn @click="saveTrick">Save Trick</v-btn>
+                <v-file-input accept="video/*" @change="handleFile" ></v-file-input>
               </div>
             </v-stepper-content>
 
             <v-stepper-content step="4">
               <div>
-                Success
+                <v-text-field label="Description" v-model="submission"></v-text-field>
+                <v-btn @click="incStep">Save submission</v-btn>
+              </div>
+            </v-stepper-content>
+
+            <v-stepper-content step="5">
+              <div>
+                  <v-btn @click="save">Save</v-btn>
               </div>
             </v-stepper-content>
           </v-stepper-items>
@@ -73,11 +86,12 @@ import {mapState, mapMutations, mapActions} from 'vuex';
 import {UPLOAD_TYPE} from '@/data/enum'
 export default {
   data: () => ({
-    trickName: ""
+    trickName: "",
+    submission: ""
   }),
   computed: {
     ...mapState('tricks', ['tricks']),
-    ...mapState('video-upload', ['uploadPromise', 'active', 'step']),
+    ...mapState('video-upload', ['uploadPromise', 'active', 'step', 'type']),
     uploadType () {
       return UPLOAD_TYPE;
     }
@@ -86,8 +100,8 @@ export default {
     ...mapMutations('tricks',{
       resetTricks: 'reset'
     }),
-    ...mapMutations('video-upload', ['reset','toggleActivity', 'setType']),
-    ...mapActions('video-upload', ['startVideoUpload', 'createTrick']),
+    ...mapMutations('video-upload', ['reset','toggleActivity', 'setType', 'incStep']),
+    ...mapActions('video-upload', ['startVideoUpload', 'createTrick' ]),
 
     async handleFile(file) {
       if(!file) return;
@@ -98,15 +112,19 @@ export default {
       console.log(file);
       this.startVideoUpload({form});
     },
-    async saveTrick() {
+    async save() {
       if(!this.uploadPromise)
       {
         console.log("error on uploadPromise:")
         return;
       }
       const video = await this.uploadPromise;
-      await this.createTrick({trick: {name: this.trickName, video}});
+      await this.createTrick({
+        trick: {name: this.trickName},
+        submission: { description: this.submission,  video, trickId: 1 }
+      });
       this.trickName = "";
+      this.submission = "";
       this.reset();
     }
   }

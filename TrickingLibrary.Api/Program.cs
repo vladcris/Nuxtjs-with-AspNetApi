@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using TrickingLibrary.Api;
+using TrickingLibrary.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +8,8 @@ const string allCors = "nuxt-dev";
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<TrickStore>();
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseInMemoryDatabase("Dev"));
 
 builder.Services.AddCors(opt => opt.AddPolicy(allCors, policy => {   
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
